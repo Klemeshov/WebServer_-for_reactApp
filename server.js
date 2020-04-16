@@ -6,7 +6,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser("asdasfsdsd"));
 
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
@@ -78,20 +78,26 @@ let state = {
     totalUsersCount: 6
 };
 
-app.get('/auth/me', (req, res) =>{
-    console.log(req.cookies);
+app.get('/auth/me', (req, res) => {
     res.cookie('id', '1', {
-        maxAge: 3600 * 24*1000
+        maxAge: 3600 * 24 * 1000
     });
-    res.json({
-        id:1,
-        email:"dima-0510@mail.ru",
-        login:"admin"
-    })
+    if (req.cookies.id) {
+        res.json({
+            id: 1,
+            email: "dima-0510@mail.ru",
+            login: "admin",
+            status: true
+        })
+    }else{
+        res.json({
+            status:false
+        })
+    }
 
 });
 
-app.get('/users',  (req, res) => {
+app.get('/users', (req, res) => {
     let page = 0;
     let count = 5;
 
@@ -105,20 +111,20 @@ app.get('/users',  (req, res) => {
         users: [],
         totalUsersCount: state.totalUsersCount
     };
-    for (let i = page * count; i < (Number(page)+Number(1))*count; i++) {
+    for (let i = page * count; i < (Number(page) + Number(1)) * count; i++) {
         if (state.users[i] != null) {
             newState.users.push(state.users[i]);
         }
     }
     res.json(newState)
-
 });
-app.get('/profile/:id?', (req, res)=>{
+
+app.get('/profile/:id?', (req, res) => {
     let id = req.params.id;
-    if (!id){
+    if (!id) {
         id = req.cookies.id;
     }
-    res.json(state.users[id-1]);
+    res.json(state.users[id - 1]);
 });
 
 app.listen(5000, () => {
