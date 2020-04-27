@@ -6,7 +6,6 @@ exports.getProfile = (db) => (req, res) => {
     if (!id) {
         id = req.cookies.id;
     }
-    console.log(req.params.id);
     db.collection('Users').findOne({_id: ObjectId(id)}).then(result => {
         res.json(result);
     }, err => {
@@ -26,7 +25,7 @@ exports.putStatus = (db) => (req, res) => {
                 isOk: true,
                 status: status
             });
-        }, err => {res.sendStatus(500); console.log(err)});
+        }, err => {res.sendStatus(500); console.warn(err)});
 
     }
 };

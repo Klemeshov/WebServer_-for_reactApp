@@ -1,9 +1,13 @@
 const app = require('express')();
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const https = require('https');
+
 const cookieParser = require('cookie-parser');
 const {setUsers} = require("./users");
 const {auth, login, logout} = require("./login");
 const {getProfile, putStatus} = require("./profile");
+
 const MongoClient = require('mongodb').MongoClient;
 
 
@@ -11,7 +15,11 @@ const cors = require('cors');
 
 const uri = "mongodb+srv://MOGGER:Lama1200@myfirstm-1yfik.mongodb.net/test?retryWrites=true&w=majority";
 
-const whitelist = ['http://localhost:3000', 'http://192.168.43.244:3000', 'http://127.0.0.1', 'http://192.168.0.105:3000/'];
+const whitelist = ['http://localhost:3000',
+    'http://192.168.43.244:3000',
+    'http://127.0.0.1',
+    'http://192.168.0.105:3000/',
+    'https://klemeshov.github.io'];
 const corsOptions = {
     credentials: true, // This is important.
     origin: (origin, callback) => {
@@ -47,7 +55,13 @@ MongoClient.connect(uri, (err, database) => {
     app.get('/profile/:id?', getProfile(db));
     app.put('/profile/status', putStatus(db));
 
-    app.listen(5000, () => {
-        console.log("server started");
-    });
+    // app.listen(5000, () => {
+    //     console.log("server started");
+    // });
+    https.createServer({
+        key: fs.readFileSync('key.pem'),
+        cert: fs.readFileSync('cert.pem')
+    }, app).listen(5000, () => {
+            console.log("server started");
+        });
 });

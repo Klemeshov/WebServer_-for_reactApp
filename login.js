@@ -48,12 +48,12 @@ exports.login = (db) => (req, res) => {
                     });
                 } else {
                     if (req.body.rememberMe) {
-                        res.cookie('id',user.id, {
-                            maxAge: 1000*60*60*24*30*4
+                        res.cookie('id', user.id, {
+                            maxAge: 1000 * 60 * 60 * 24 * 30 * 4
                         })
                     } else {
                         res.cookie("id", user.id, {
-                            maxAge: 1000*60*60
+                            maxAge: 1000 * 60 * 60
                         })
                     }
                     res.json({
@@ -69,9 +69,9 @@ exports.login = (db) => (req, res) => {
     }
 };
 
-exports.logout = (db) => (req, res) =>{
+exports.logout = (db) => (req, res) => {
     res.cookie("id", null);
     res.json({
-        isAuth:false
+        isAuth: false
     })
 };
