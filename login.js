@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectID;
 
 exports.auth = (db) => (req, res) => {
     if (req.cookies.id) {
-        db.collection('auth').findOne({_id: req.cookies.id}).then(result => {
+        db.collection('auth').findOne({id: req.cookies.id}).then(result => {
             if (result)
                 res.json({
                     ...result,
@@ -61,7 +61,6 @@ exports.login = (db) => (req, res) => {
                         password: null,
                         isAuth: true
                     })
-                    console.log(user)
                 }
             }
         }, err => {
