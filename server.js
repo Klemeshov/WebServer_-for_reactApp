@@ -59,8 +59,8 @@ MongoClient.connect(uri, (err, database) => {
     //     console.log("server started");
     // });
     https.createServer({
-        key: fs.readFileSync('key.pem'),
-        cert: fs.readFileSync('cert.pem')
+        // key: fs.readFileSync('key.pem'),
+        // cert: fs.readFileSync('cert.pem')
     }, app).listen(5000, () => {
             console.log("server started");
         });
