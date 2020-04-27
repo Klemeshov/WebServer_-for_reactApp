@@ -55,7 +55,7 @@ MongoClient.connect(uri, (err, database) => {
     app.get('/profile/:id?', getProfile(db));
     app.put('/profile/status', putStatus(db));
 
-    app.listen(5000, () => {
+    app.listen(process.env.PORT || 5000, () => {
         console.log("server started");
     });
     // https.createServer({
