@@ -55,13 +55,13 @@ MongoClient.connect(uri, (err, database) => {
     app.get('/profile/:id?', getProfile(db));
     app.put('/profile/status', putStatus(db));
 
-    // app.listen(5000, () => {
-    //     console.log("server started");
-    // });
-    https.createServer({
-        // key: fs.readFileSync('key.pem'),
-        // cert: fs.readFileSync('cert.pem')
-    }, app).listen(5000, () => {
-            console.log("server started");
-        });
+    app.listen(5000, () => {
+        console.log("server started");
+    });
+    // https.createServer({
+    //     // key: fs.readFileSync('key.pem'),
+    //     // cert: fs.readFileSync('cert.pem')
+    // }, app).listen(5000, () => {
+    //         console.log("server started");
+    //     });
 });
