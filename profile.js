@@ -20,12 +20,15 @@ exports.putStatus = (db) => (req, res) => {
         const status = req.body.status;
         const id = req.cookies.id;
 
-        db.collection('Users').updateOne({id: Number(id)}, { $set: { status} }).then(result => {
+        db.collection('Users').updateOne({_id: ObjectId(id)}, {$set: {status}}).then(result => {
             res.json({
                 isOk: true,
                 status: status
             });
-        }, err => {res.sendStatus(500); console.warn(err)});
+        }, err => {
+            res.sendStatus(500);
+            console.warn(err)
+        });
 
     }
 };
